@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBank | Dashboard</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="{{ url_for('home') }}" class="logo">MyBank<span style="color:#2457e6">.</span></a>
+            <div class="nav-links">
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="flash-message flash-{{ category }}" role="status">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endwith %}
+    </div>
+
+    <main class="dashboard">
+        <p class="eyebrow" style="color:#2457e6">MYBANK / PERSONAL BANKING</p>
+        <h1>Welcome back, {{ user_name }}.</h1>
+        <p>Here's what's happening with your account.</p>
+
+        {% if account %}
+        <section class="account-card">
+            <p class="eyebrow" style="color:#2457e6">TOTAL AVAILABLE BALANCE</p>
+            <h2 style="font-size:36px; margin:0 0 18px;">
+                ₹{{ "%.2f"|format(account.balance) }}
+            </h2>
+            <p>ACCOUNT NUMBER</p>
+            <strong>{{ account.account_number }}</strong>
+            <p style="margin-top:18px; font-size:13px;">
+                MyBank demo account
+            </p>
+        </section>
+
+        <div class="feature-grid" style="margin-top:22px;">
+            <section class="account-card">
+                <h2>Deposit money</h2>
+                <p>Add funds to your demo account.</p>
+                <form action="{{ url_for('deposit') }}" method="POST">
+                    <label for="deposit_amount">Amount (₹)</label>
+                    <input type="number" id="deposit_amount"
+                           name="amount" min="0.01" step="0.01" required>
+                    <button type="submit">Deposit funds</button>
+                </form>
+            </section>
+
+            <section class="account-card">
+                <h2>Withdraw money</h2>
+                <p>Withdraw from your available demo balance.</p>
+                <form action="{{ url_for('withdraw') }}" method="POST">
+                    <label for="withdraw_amount">Amount (₹)</label>
+                    <input type="number" id="withdraw_amount"
+                           name="amount" min="0.01" step="0.01" required>
+                    <button type="submit">Withdraw funds</button>
+                </form>
+            </section>
+        </div>
+
+        <section class="account-card">
+            <h2>Recent transactions</h2>
+            <p>Your latest account activity.</p>
+
+            {% if transactions %}
+                <div class="transaction-list">
+                    {% for transaction in transactions %}
+                    <article class="transaction-item">
+                        <p>
+                            <strong>{{ transaction.transaction_type|title }}</strong>
+                            <span style="float:right;">
+                                {% if transaction.transaction_type|lower in ['deposit', 'credit'] %}
+                                    +
+                                {% else %}
+                                    −
+                                {% endif %}
+                                ₹{{ "%.2f"|format(transaction.amount) }}
+                            </span>
+                        </p>
+                        <p>{{ transaction.description or "Bank transaction" }}</p>
+                        <small>{{ transaction.created_at }}</small>
+                    </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No transactions yet. Make your first deposit to get started.</p>
+            {% endif %}
+        </section>
+
+        {% else %}
+            <section class="account-card">
+                <h2>Account not found</h2>
+                <p>No bank account is linked to your profile yet.</p>
+            </section>
+        {% endif %}
+
+        <footer style="margin-top:35px;">
+            <p>MyBank — Educational Banking Demo</p>
+            <p>This application does not handle real money.</p>
+        </footer>
+    </main>
+
+</body>
+</html>

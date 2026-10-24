@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBank | Simple Digital Banking</title>
+    <meta name="description" content="Explore MyBank, an educational banking application built with Python, Flask, and MySQL.">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="{{ url_for('home') }}" class="logo">MyBank<span style="color:#2457e6">.</span></a>
+
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}">Home</a>
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Register</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <p class="eyebrow">A SIMPLER WAY TO BANK</p>
+
+                <h1>Your money.<br>More clarity. Less complexity.</h1>
+
+                <p class="hero-description">
+                    Explore a simple digital banking experience.
+                    View your demo account, make deposits and withdrawals,
+                    and keep track of your transactions in one place.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="{{ url_for('register') }}" class="btn">
+                        Get started
+                    </a>
+                    <a href="{{ url_for('login') }}" class="btn btn-secondary">
+                        Sign in
+                    </a>
+                </div>
+
+                <p style="margin-top:30px; color:#b8c6df; font-size:13px;">
+                    Built with Python, Flask and MySQL
+                </p>
+            </div>
+        </section>
+
+        <section class="features">
+            <h2>Everything in one place</h2>
+
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <h3>01. Account overview</h3>
+                    <p>
+                        View your demo account number and current balance
+                        from a single dashboard.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <h3>02. Simple transactions</h3>
+                    <p>
+                        Try deposits and withdrawals and see how your
+                        demo balance changes.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <h3>03. Transaction history</h3>
+                    <p>
+                        Review recent account activity, including
+                        transaction amounts and dates.
+                    </p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p><strong>MyBank</strong> — Educational Banking Demo</p>
+        <p>For learning and demonstration only. Not a real banking service.</p>
+    </footer>
+
+</body>
+</html>
